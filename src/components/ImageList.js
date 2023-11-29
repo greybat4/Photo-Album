@@ -2,10 +2,14 @@ import React from "react";
 import Image from "./Image";
 
 export default class ImageList extends React.Component {
-  // Lifecycle method to prevent re render of the list if some spaces are present
-  shouldComponentUpdate(nextProps) {
-    if(this.props.images.join('') === nextProps.images.join('')){
-      return false;
+  shouldComponentUpdate(nextProps, _) {
+    const imagesLength = nextProps.images.length;
+
+    if (nextProps.images.length > 0) {
+      const lastImageUrl = nextProps.images[imagesLength - 1];
+      if (lastImageUrl.length <= 5 || lastImageUrl.indexOf(" ") >= 0) {
+        return false;
+      }
     }
     return true;
   }
